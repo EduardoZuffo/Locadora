@@ -13,20 +13,38 @@ use AppBundle\Entity\Filmes;
 
 class FilmesController extends Controller
 {
+    
+    /**
+     * 
+     * @return \Doctrine\ORMEntityManager
+     */
+    private function getEm()
+    {
+        return $this->getDoctrine()->getManager();
+    }
+    
+    
     /**
      * @Route("/filmes", name="filmes_index")
      */
     public function indexAction()
     {
         
-        $doctrine = $this->getDoctrine()->getEntityManager();
-        $filmes = $doctrine->getRepository('AppBundle:Filmes');
+        /*Model*/
+        $filmes = $this->getEm()->getRepository('AppBundle:Filmes');
         
+
+/*        
+        $retorno = $filmes->findBy(
+                array('genero' => 'Terror',
+                    'lancamento' => true
+                    )
+                );
+*/
         $retorno = $filmes->findAll();
         
-        
-        
-        return $this->render('filmes/index.html.twig', 
+        /*View*/
+        return $this->render('filmes/index.html.twig',
                 array('filmes' => $retorno)
         );
     }
@@ -38,16 +56,47 @@ class FilmesController extends Controller
     {
         $filme = new Filmes();
         $filme->setGenero('Terror');
-        $filme->setLancamento(true);
-        $filme->setNome('Rec');
+        $filme->setLancamento(false);
+        $filme->setNome('Donnie Darko');
         
-        $doctrine = $this->getDoctrine()->getEntityManager();
+        $doctrine = $this->getEm();
         $doctrine->persist($filme);
         $doctrine->flush();
         
         return $this->render('filmes/cadastro.html.twig');
     }
+
+    /**
+     * @Route("/filmes/genero")
+     */
+    public function generoAction()
+    {
+        /*Model*/
+        $repositorio = $this->getEm()->getRepository('AppBundle:Genero');
+        $dados = $repositorio->findAll();
+        
+        /*View*/
+        return $this->render('filmes/genero.html.twig',
+                array('dados' => $dados)
+        );
+    }
     
+    /**
+     * @Route("/filmes/genero/cadastro")
+     */
+    public function generoCadastroAction()
+    {
+        
+        return $this->render('filmes/genero-cadastro.html.twig');
+    }
+    
+    /**
+     * @Route("/filmes/genero/criar")
+     */
+    public function criarGeneroAction()
+    {
+                
+    }
     
 }
 
