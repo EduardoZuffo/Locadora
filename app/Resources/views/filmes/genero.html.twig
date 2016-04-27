@@ -3,7 +3,14 @@
 {% block body %}
     <h1>Generos</h1>
 
-    {{ dump(dados) }}
+{#    {{ dump(dados) }}#}
+
+
+            <a href="{{ path('genero_cadastro') }}" class="btn btn-primary pull-right">
+                <span class="glyphicon-plus"></span>
+                Cadastrar Novo Gênero
+            </a>
+
 
     <table class="table-bordered col-md-12">
         <tr><th>Nome</th><tr>

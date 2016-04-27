@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Entity\Filmes;
-
+use AppBundle\Entity\Genero;
 
 class FilmesController extends Controller
 {
@@ -17,6 +17,7 @@ class FilmesController extends Controller
     /**
      * 
      * @return \Doctrine\ORMEntityManager
+     * Funçao criada para simplificar a chamada do DOCTRINE.........
      */
     private function getEm()
     {
@@ -67,13 +68,16 @@ class FilmesController extends Controller
     }
 
     /**
-     * @Route("/filmes/genero")
+     * @Route("/filmes/genero", name="genero_index")
      */
     public function generoAction()
     {
         /*Model*/
         $repositorio = $this->getEm()->getRepository('AppBundle:Genero');
-        $dados = $repositorio->findAll();
+        $dados = $repositorio->findBy(
+                array(),
+                array('nome' => "ASC")
+                );
         
         /*View*/
         return $this->render('filmes/genero.html.twig',
@@ -82,7 +86,7 @@ class FilmesController extends Controller
     }
     
     /**
-     * @Route("/filmes/genero/cadastro")
+     * @Route("/filmes/genero/cadastro", name="genero_cadastro")
      */
     public function generoCadastroAction()
     {
@@ -93,9 +97,19 @@ class FilmesController extends Controller
     /**
      * @Route("/filmes/genero/criar")
      */
-    public function criarGeneroAction()
+    public function criarGeneroAction(Request $request)
     {
-                
+        $nomeGenero = $request->get('nome');
+        
+        $genero = new Genero;
+        $genero->setNome($nomeGenero);
+        
+        $doctrine = $this->getEm();
+        $doctrine->persist($genero);
+        
+        $doctrine->flush();
+        
+        return $this->redirectToRoute('genero_index');
     }
     
 }
