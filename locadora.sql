@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: 26/04/2016 às 21:44
+-- Tempo de Geração: 27/04/2016 às 21:48
 -- Versão do servidor: 5.5.38-0ubuntu0.14.04.1
 -- Versão do PHP: 5.5.9-1ubuntu4.14
 
@@ -33,14 +33,15 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `data_nascimento` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Fazendo dump de dados para tabela `cliente`
 --
 
 INSERT INTO `cliente` (`id`, `nome`, `endereco`, `email`, `data_nascimento`) VALUES
-(1, 'Nome do Cliente1', 'Endereço do Cliente1', 'emaildocliente1@email.com', '2011-01-01');
+(1, 'Joselito', 'Endereço do Joselito', 'emaildoJoselito@email.com', '2011-01-01'),
+(2, 'Fernando', 'endereço do Fernando', 'fer@nan.do', '1902-01-01');
 
 -- --------------------------------------------------------
 
