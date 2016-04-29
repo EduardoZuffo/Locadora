@@ -37,6 +37,10 @@ class Genero
         $this->nome = $nome;
     }
 
+    public function __toString() 
+    {
+        return $this->getNome();
+    }
 
 }
 

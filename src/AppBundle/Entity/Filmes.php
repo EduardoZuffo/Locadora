@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,11 +20,13 @@ class Filmes
     
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
      */
     private $nome;
     
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotEqualTo(value="Selecione", message="Selecione um Genero")
      */
     private $genero;
     
@@ -46,7 +49,7 @@ class Filmes
     
     /**
      *
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $capa;
     
