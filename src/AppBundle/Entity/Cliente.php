@@ -22,7 +22,7 @@ class Cliente
     /**
      * @ORM\Column(type="string", length=200)
      * 
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Insira o nome do Cliente")
      * @Assert\Length(
      *          min=6, 
      *          max=200,

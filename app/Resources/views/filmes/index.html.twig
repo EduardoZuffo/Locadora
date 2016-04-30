@@ -32,9 +32,9 @@
                             <div class="btn-group">
                                 <button type="button" class="btn btn-success btn-filter" data-target="pagado">Disponíveis</button>
                                 <button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Locados</button>
-                                <button type="button" class="btn btn-primary btn-filter" data-target="cancelado">Lançamentos</button>
                                 <button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Reservados</button>
-                                <button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+                                <a href="" class="btn btn-primary btn-filter" data-target="cancelado">Lançamentos</a>
+                                <a href="{{ path('filmes_index') }}" class="btn btn-default btn-filter" data-target="all">Todos</a>
                             </div>
                         </div>
                         <div class="table-container">
@@ -56,13 +56,16 @@
                                         <td>
                                             <div class="media">
                                                 <a href="#" class="pull-left">
-                                                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+                                                    <img src="/capas/{{ filme.capa }}" width="128" height="128" class="media-photo">
                                                 </a>
                                                 <div class="media-body">
-                                                    <span class="media-meta pull-right">DATAAAAAA</span>
+                                                    <span class="media-meta pull-right">{% if filme.data %}{{ filme.data|date('d/m/Y') }}{% endif %}</span>
+
                                                     <h4 class="title">
                                                         {{ filme.nome }}
-                                                        <span class="pull-right pagado">(Pagado)</span>
+                                                        {% if filme.lancamento %}
+                                                            <span class="pull-right pagado">(LANÇAMENTO)</span>
+                                                        {% endif %}
                                                     </h4>
                                                     <p class="summary">{{ filme.sinopse }}</p>
                                                 </div>
