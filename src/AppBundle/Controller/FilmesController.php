@@ -75,6 +75,48 @@ class FilmesController extends Controller
         );
     }
 
+    /**
+     * @Route("/filmes/deletar/{id}", name="filmes_deletar")
+     */
+    public function deletarAction($id)
+    {
+        $repositorio = $this->getEm()->getRepository('AppBundle:Filmes');
+        $filme = $repositorio->find($id);
+        
+        $this->getEm()->remove($filme);
+        
+        $this->getEm()->flush();
+        
+        $this->addFlash('info', 'O filme foi deletado com sucesso');
+        
+        return $this->redirectToRoute("filmes_index");
+    }
+
+    
+    /**
+     * @Route ("/filmes/editar/{id}", name="filmes_editar")
+     */
+    public function filmesEditarAction(Request $request, $id)
+    {
+        $repositorio = $this->getEm()->getRepository('AppBundle:Filmes');
+        
+        $filme = $repositorio->find($id);
+        $capa = $filme->getNomeCapa();
+        
+        $form = $this->createForm(FilmesType::class, $filme);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            return $this->formSubmit($filme, $form);
+        }
+        
+        return $this->render('filmes/cadastro.html.twig', array(
+            'form_filmes' => $form->createView(),
+            'capa' => $capa
+        ));
+    }
+
         /**
      * @Route("/filmes/cadastro")
      */
@@ -82,11 +124,29 @@ class FilmesController extends Controller
     {
         $filme = new Filmes();
         $form = $this->createForm(FilmesType::class, $filme);
-
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid())
         {
+            return $this->formSubmit($filme, $form);
+        }
+        
+        return $this->render('filmes/cadastro.html.twig', array(
+            'form_filmes' => $form->createView()
+        ));
+    }
+
+    /**
+     * 
+     * @param type $filme
+     * @param type $form
+     * @return type
+     */
+    private function formSubmit($filme, $form)
+    {
+
+        
+
             $pasta = __DIR__.'/../../../web/capas';
             $imagem = $form['capa']->getData();
             $ext = $imagem->guessExtension();
@@ -94,19 +154,21 @@ class FilmesController extends Controller
             $nomeArquivo = uniqid().'.'.$ext;
             
             $imagem->move($pasta, $nomeArquivo);
+            
             $filme->setCapa($nomeArquivo);
             
             $doctrine = $this->getEm();
             $doctrine->persist($filme);
             $doctrine->flush();
             
+            $this->addFlash('cadastro', 'O filme foi alterado com sucesso');
+            
             return $this->redirectToRoute('filmes_index');
-        }
         
-        return $this->render('filmes/cadastro.html.twig', array(
-            'form_filmes' => $form->createView()
-        ));
+        
     }
+
+    
 
     /**
      * @Route("/filmes/genero", name="genero_index")

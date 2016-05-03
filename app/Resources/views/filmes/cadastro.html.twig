@@ -35,10 +35,15 @@
             }}
             {{ form_errors(form_filmes.lancamento) }}
         </div>
+
+            
         {{ form_widget(form_filmes) }}
 
 
-
+        <div>
+            <img src="/capas/{{ capa }}"  class="media-photo">
+        </div>
+        
         <button id="salvar" name="salvar" class="btn btn-primary pull-right" type="submit">Salvar</button>
 
         {{ form_end(form_filmes)}}
