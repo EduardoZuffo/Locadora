@@ -39,10 +39,11 @@
             
         {{ form_widget(form_filmes) }}
 
-
+        {% if capa %}
         <div>
             <img src="/capas/{{ capa }}"  class="media-photo">
         </div>
+        {% endif %}
         
         <button id="salvar" name="salvar" class="btn btn-primary pull-right" type="submit">Salvar</button>
 

@@ -125,6 +125,7 @@ class FilmesController extends Controller
         $filme = new Filmes();
         $form = $this->createForm(FilmesType::class, $filme);
         $form->handleRequest($request);
+        $capa = $filme->getNomeCapa();
         
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -132,7 +133,8 @@ class FilmesController extends Controller
         }
         
         return $this->render('filmes/cadastro.html.twig', array(
-            'form_filmes' => $form->createView()
+            'form_filmes' => $form->createView(),
+            'capa' => $capa
         ));
     }
 

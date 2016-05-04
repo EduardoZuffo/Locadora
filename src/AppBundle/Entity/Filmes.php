@@ -201,10 +201,16 @@ class Filmes
      */
     public function getCapa()
     {
-        $pasta = __DIR__.'/../../../web/capas/'.$this->capa;
-        $file = new \Symfony\Component\HttpFoundation\File\File($pasta);
-        
-        return $file;
+        if (is_null($this->capa) || $this->capa == '')
+        {
+            return "";
+        } else
+        {
+            $pasta = __DIR__.'/../../../web/capas/'.$this->capa;
+            $file = new \Symfony\Component\HttpFoundation\File\File($pasta);
+
+            return $file;
+        }
     }
     
     /**
